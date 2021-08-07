@@ -1,0 +1,25 @@
+:host {
+  li {
+    list-style: none;
+    border-bottom: 1px solid grey;
+    padding: 1em 0.5em;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    input {
+      margin-right: 0.5em;
+    }
+  }
+
+  &:last-of-type {
+    li {
+      border-bottom: none;
+    }
+  }
+}
+
+.complete {
+  text-decoration: line-through;
+}

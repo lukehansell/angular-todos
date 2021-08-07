@@ -1,0 +1,9 @@
+<ul *ngIf="todos.length; else noTodos">
+  <app-todo-list-item *ngFor="let todo of todos | filterComplete:hideComplete" [text]="todo.text"
+    [isComplete]="todo.isComplete" [id]="todo.id" (todoClick)="handleTodoClick(todo.id)">
+  </app-todo-list-item>
+</ul>
+
+<ng-template #noTodos>
+  <div>Nothing to do!</div>
+</ng-template>

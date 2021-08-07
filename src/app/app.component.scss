@@ -1,0 +1,49 @@
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0 0.5em;
+    background-color:  #0074D9;
+    color: #fff;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+    h1 {
+      font-size: 1.5em;
+      flex-shrink: 0;
+    }
+
+    label {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+
+  .content {
+    flex: 1;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+
+    .todoList {
+      flex: 0 1 auto;
+      overflow-y: scroll;
+    }
+  }
+
+  footer {
+    padding: 0.5em;
+    background: #eee;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
