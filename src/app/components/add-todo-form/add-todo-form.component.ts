@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
-import { TodosService } from '../todos.service';
+import { TodosService } from '../../services/todos.service';
 
 @Component({
   selector: 'app-add-todo-form',

@@ -1,5 +1,5 @@
 import { NgIterable, Pipe, PipeTransform } from '@angular/core';
-import { Todo } from '../todo'
+import { Todo } from '../interfaces/todo'
 @Pipe({
   name: 'filterComplete'
 })

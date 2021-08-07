@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Todo } from '../todo';
-import { TodosService } from '../todos.service';
+import { Todo } from '../../interfaces/todo';
+import { TodosService } from '../../services/todos.service';
 
 @Component({
   selector: 'app-todo-list',
