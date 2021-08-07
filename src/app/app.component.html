@@ -1,10 +1,10 @@
 <div class="container">
   <header>
     <h1>Todo List</h1>
-    <toggle-hide-complete [hideComplete]="hideComplete" (toggle)="toggleHideComplete()"></toggle-hide-complete>
+    <toggle-hide-complete></toggle-hide-complete>
   </header>
   <div class="content">
-    <app-todo-list [hideComplete]="hideComplete"></app-todo-list>
+    <app-todo-list></app-todo-list>
   </div>
   <footer>
     <app-add-todo-form></app-add-todo-form>

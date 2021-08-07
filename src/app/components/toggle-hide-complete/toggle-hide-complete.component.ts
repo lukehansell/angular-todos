@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
+import { AppStateService } from 'src/app/services/app-state.service';
 
 @Component({
   selector: 'toggle-hide-complete',
@@ -6,14 +7,5 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./toggle-hide-complete.component.scss']
 })
 export class ToggleHideCompleteComponent {
-
-  @Input() hideComplete: boolean = false
-
-  @Output() toggle = new EventEmitter()
-
-  changeHandler() {
-    console.log('clicked')
-    this.toggle.emit()
-  }
-
+  constructor(public appStateService: AppStateService) {}
 }

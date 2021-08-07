@@ -1,6 +1,7 @@
 <ul *ngIf="(todosService.todos | async)?.length; else noTodos">
-  <app-todo-list-item *ngFor="let todo of todosService.todos | async | filterComplete:hideComplete" [text]="todo.text"
-    [isComplete]="todo.isComplete" [id]="todo.id" (todoClick)="handleTodoClick(todo.id)">
+  <app-todo-list-item
+    *ngFor="let todo of todosService.todos | async | filterComplete:(appStateService.appState$ | async)?.hideComplete || false"
+    [text]="todo.text" [isComplete]="todo.isComplete" [id]="todo.id" (todoClick)="todosService.toggleComplete(todo.id)">
   </app-todo-list-item>
 </ul>
 
