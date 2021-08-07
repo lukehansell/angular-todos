@@ -16,7 +16,6 @@ export class TodoListItemComponent {
   @Output() todoClick = new EventEmitter()
 
   onClick() {
-    console.log('clicked')
     this.todoClick.emit()
   }
 }

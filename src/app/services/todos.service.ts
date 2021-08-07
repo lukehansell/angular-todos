@@ -26,7 +26,6 @@ export class TodosService {
   public readonly todos: Observable<Todo[]> = this._todos.asObservable()
 
   addTodo(text: string) {
-    console.log('add todo called')
     this._todos.next(
       [
         ...this._todos.getValue(),

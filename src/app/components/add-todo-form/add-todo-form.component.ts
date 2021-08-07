@@ -14,7 +14,6 @@ export class AddTodoFormComponent {
   constructor(private todoService: TodosService) {}
 
   onSubmit() {
-    console.log('adding todo')
     this.todoService.addTodo(this.textControl.value)
     this.textControl.setValue('')
   }
