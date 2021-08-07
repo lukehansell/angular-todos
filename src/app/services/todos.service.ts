@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Todo } from '../interfaces/todo';
+import { LocalStorageService } from './local-storage.service';
 
 const dummyData = [
   {
@@ -18,12 +19,28 @@ const dummyData = [
 @Injectable({
   providedIn: 'root'
 })
-export class TodosService {
+export class TodosService implements OnDestroy {
   private id = 0
 
-  private _todos: BehaviorSubject<Todo[]> = new BehaviorSubject(dummyData)
+  private _todos: BehaviorSubject<Todo[]>
 
-  public readonly todos: Observable<Todo[]> = this._todos.asObservable()
+  private circularSubscription
+
+  public readonly todos: Observable<Todo[]>
+
+  constructor(localStorageService: LocalStorageService) {
+    const initialTodos = localStorageService.getItem('todos') || []
+    this._todos = new BehaviorSubject(initialTodos)
+    this.todos = this._todos.asObservable()
+
+    this.circularSubscription = this.todos.subscribe(todos => {
+      localStorageService.setItem('todos', todos)
+    })
+  }
+
+  ngOnDestroy() {
+    this.circularSubscription.unsubscribe()
+  }
 
   addTodo(text: string) {
     this._todos.next(
