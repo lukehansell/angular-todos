@@ -1,0 +1,17 @@
+form {
+  width: 80vw;
+  display: flex;
+
+  input {
+    flex: 1;
+    line-height: 2em;
+  }
+}
+
+@media screen and (min-width: 426px) {
+  form {
+    input {
+      margin-right: 1em;
+    }
+  }
+}
