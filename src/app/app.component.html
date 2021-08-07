@@ -4,9 +4,16 @@
     <toggle-hide-complete></toggle-hide-complete>
   </header>
   <div class="content">
-    <app-todo-list></app-todo-list>
+    <app-todo-list [noTodosTemplate]="noTodos"></app-todo-list>
   </div>
   <footer>
     <app-add-todo-form></app-add-todo-form>
   </footer>
 </div>
+
+<ng-template #noTodos>
+  <div class="center placeholder">
+    <img src="/assets/chilling.svg" class="placeholder-image" />
+    <p class="placeholder-text">nothing to do...</p>
+  </div>
+</ng-template>
