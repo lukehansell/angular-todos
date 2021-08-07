@@ -1,5 +1,7 @@
 # Todo
 
+An example project for me to learn and get excited about Angular with.
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.5.
 
 ## Development server
