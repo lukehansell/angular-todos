@@ -1,9 +1,7 @@
 <div class="container">
   <header>
     <h1>Todo List</h1>
-    <label>hide complete
-      <input type="checkbox" [checked]="hideComplete" (click)="toggleHideComplete()" />
-    </label>
+    <toggle-hide-complete [hideComplete]="hideComplete" (toggle)="toggleHideComplete()"></toggle-hide-complete>
   </header>
   <div class="content">
     <app-todo-list [hideComplete]="hideComplete"></app-todo-list>
