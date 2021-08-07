@@ -1,13 +1,14 @@
 import { NgIterable, Pipe, PipeTransform } from '@angular/core';
-
+import { Todo } from '../todo'
 @Pipe({
   name: 'filterComplete'
 })
 export class FilterCompletePipe implements PipeTransform {
 
-  transform(value: any[], filterComplete: boolean): NgIterable<any> {
-    if (!filterComplete) return value
-    return value.filter(item => !item.isComplete);
+  transform(todos: Todo[] | null, filterComplete: boolean): NgIterable<any> | null {
+    if (!todos) return todos
+    if (!filterComplete) return todos
+    return todos.filter(todo => !todo.isComplete);
   }
 
 }

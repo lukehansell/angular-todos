@@ -10,15 +10,13 @@ import { TodosService } from '../todos.service';
 })
 export class TodoListComponent implements OnInit, OnDestroy {
 
-  todos: Todo[]
+  todos: Todo[] = []
   private _todoServiceSubscription: Subscription;
 
   @Input() hideComplete: boolean = true
 
   constructor(public todosService: TodosService) {
-    this.todos = todosService.todos
-
-    this._todoServiceSubscription = todosService.update.subscribe((todos) => {
+    this._todoServiceSubscription = todosService.todos.subscribe((todos) => {
       console.log('received update', todos)
       this.todos = todos
     })
