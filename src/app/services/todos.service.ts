@@ -26,14 +26,20 @@ export class TodosService implements OnDestroy {
 
   private circularSubscription
 
-  public readonly todos: Observable<Todo[]>
+  public readonly todos$: Observable<Todo[]>
+
+  private getTodosFromLocalStorage(localStorageService: LocalStorageService): Todo[] {
+    const data = localStorageService.getItem('todos')
+    if (!data) return []
+    return JSON.parse(data)
+  }
 
   constructor(localStorageService: LocalStorageService) {
-    const initialTodos = localStorageService.getItem('todos') || []
+    const initialTodos = this.getTodosFromLocalStorage(localStorageService)
     this._todos = new BehaviorSubject(initialTodos)
-    this.todos = this._todos.asObservable()
+    this.todos$ = this._todos.asObservable()
 
-    this.circularSubscription = this.todos.subscribe(todos => {
+    this.circularSubscription = this.todos$.subscribe(todos => {
       localStorageService.setItem('todos', todos)
     })
   }
