@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { List } from 'immutable';
 import { Todo } from '../interfaces/todo';
 import { LocalStorageService } from './local-storage.service';
 
@@ -7,7 +8,7 @@ import { TodosService } from './todos.service';
 describe('TodosService', () => {
   let service: TodosService;
 
-  let todos: Todo[]
+  let todos: List<Todo>
 
   let localStorageMock: LocalStorageService
 
@@ -33,9 +34,8 @@ describe('TodosService', () => {
 
   describe('on init', async () => {
     it('defaults to []', () => {
-      expect(todos).toEqual([])
+      expect(todos.toArray()).toEqual([])
     })
-
   })
 
   describe('addTodo', () => {
@@ -44,30 +44,31 @@ describe('TodosService', () => {
     })
 
     it('adds "something" to the list of todos', () => {
-      expect(todos).toEqual([{
+      expect(todos.toArray()).toEqual([{
         isComplete: false,
         text: 'something',
-        id: 0
+        id: jasmine.stringMatching(/.+/)
       }])
     })
 
     it('stores the value of todos in localstorage', () => {
-      expect(localStorageMock.setItem).toHaveBeenCalledWith('todos', todos)
+      expect(localStorageMock.setItem).toHaveBeenCalledWith('todos', todos.toArray())
     })
   })
 
   describe('toggleComplete', () => {
     beforeEach(() => {
       service.addTodo('something')
-      service.toggleComplete(0)
+
+      service.toggleComplete(todos.first()?.id!)
     })
 
     it('marks the selected todo as complete', () => {
-      expect(todos[0].isComplete).toBeTrue()
+      expect(todos.first()!.isComplete).toBeTrue()
     })
 
     it('stores the value of todos in localstorage', () => {
-      expect(localStorageMock.setItem).toHaveBeenCalledWith('todos', todos)
+      expect(localStorageMock.setItem).toHaveBeenCalledWith('todos', todos.toArray())
     })
   })
 });

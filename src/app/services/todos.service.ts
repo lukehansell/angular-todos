@@ -1,46 +1,27 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { Todo } from '../interfaces/todo';
 import { LocalStorageService } from './local-storage.service';
-
-const dummyData = [
-  {
-    id: -1,
-    text: 'completed',
-    isComplete: true
-  },
-  {
-    id: -2,
-    text: 'not completed',
-    isComplete: false
-  }
-]
+import { List } from 'immutable';
+import { v4 as uuid } from 'uuid'
 
 @Injectable({
   providedIn: 'root'
 })
 export class TodosService implements OnDestroy {
-  private id = 0
+  private _todos = new BehaviorSubject(List<Todo>())
 
-  private _todos: BehaviorSubject<Todo[]>
+  private circularSubscription!: Subscription
 
-  private circularSubscription
+  public readonly todos$ = this._todos.asObservable();
 
-  public readonly todos$: Observable<Todo[]>
-
-  private getTodosFromLocalStorage(localStorageService: LocalStorageService): Todo[] {
-    const data = localStorageService.getItem('todos')
-    if (!data) return []
-    return JSON.parse(data)
-  }
-
-  constructor(localStorageService: LocalStorageService) {
-    const initialTodos = this.getTodosFromLocalStorage(localStorageService)
-    this._todos = new BehaviorSubject(initialTodos)
-    this.todos$ = this._todos.asObservable()
+  constructor(private localStorageService: LocalStorageService) {
+    const initialTodos = this.getTodosFromLocalStorage()
+    const newTodos = this._todos.getValue().concat(initialTodos)
+    this._todos.next(newTodos)
 
     this.circularSubscription = this.todos$.subscribe(todos => {
-      localStorageService.setItem('todos', todos)
+      this.localStorageService.setItem('todos', todos.toArray())
     })
   }
 
@@ -48,31 +29,31 @@ export class TodosService implements OnDestroy {
     this.circularSubscription.unsubscribe()
   }
 
-  addTodo(text: string) {
-    this._todos.next(
-      [
-        ...this._todos.getValue(),
-        {
-          id: this.id++,
-          text,
-          isComplete: false
-        }
-      ]
-    )
+  private getTodosFromLocalStorage(): List<Todo> {
+    const data = this.localStorageService.getItem('todos')
+    if (!data) return List()
+    const todos = JSON.parse(data)
+    return List(todos)
   }
 
-  toggleComplete(id: number) {
+  public addTodo(text: string) {
+    const newTodos = this._todos.getValue().push({
+      id: uuid(),
+      text,
+      isComplete: false
+    })
+    this._todos.next(newTodos)
+  }
+
+  toggleComplete(id: string) {
     const todos = this._todos.getValue()
     const index = todos.findIndex(todo => todo.id === id)
-    const todo = todos[index]
-    const updatedTodos = [
-      ...todos.slice(0, index),
-      {
-        ...todo,
-        isComplete: !todo.isComplete
-      },
-      ...todos.slice(index + 1)
-    ]
+    if (index === -1) return
+    const oldTodo = todos.find(todo => todo.id === id)
+    if (!oldTodo) return
+
+    const updatedTodos = todos.setIn([index, 'isComplete'], !oldTodo.isComplete)
     this._todos.next(updatedTodos)
   }
+
 }
