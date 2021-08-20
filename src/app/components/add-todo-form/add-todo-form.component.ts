@@ -11,7 +11,7 @@ import { TodosService } from '../../services/todos.service';
 export class AddTodoFormComponent {
   textControl = new FormControl('')
 
-  constructor(private todoService: TodosService) {}
+  constructor(public todoService: TodosService) {}
 
   onSubmit() {
     this.todoService.addTodo(this.textControl.value)

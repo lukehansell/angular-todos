@@ -9,7 +9,7 @@ import { TodosService } from '../../services/todos.service';
 })
 export class TodoListComponent {
 
-  @Input() noTodosTemplate: TemplateRef<any>
+  @Input() noTodosTemplate!: TemplateRef<any>
 
   constructor(public todosService: TodosService, public appStateService: AppStateService) { }
 

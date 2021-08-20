@@ -1,4 +1,7 @@
-<form class="todoForm" (submit)="onSubmit()">
-  <input type="text" [formControl]="textControl">
-  <button type="submit" class="primary">Add Todo</button>
-</form>
+<ng-container>
+  <form class="todoForm" (submit)="onSubmit()">
+    <input type="text" [formControl]="textControl">
+    <button type="submit" class="primary">Add Todo</button>
+  </form>
+  <div *ngIf="todoService.error" class="block error alert">{{todoService.error}}</div>
+</ng-container>

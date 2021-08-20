@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TodoListItemComponent } from './components/todo-list-item/todo-list-item.component';
 import { FilterCompletePipe } from './pipes/filter-complete.pipe';
 import { ToggleHideCompleteComponent } from './components/toggle-hide-complete/toggle-hide-complete.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ToggleHideCompleteComponent } from './components/toggle-hide-complete/t
   imports: [
     BrowserModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [
     { provide: Window, useValue: window }
